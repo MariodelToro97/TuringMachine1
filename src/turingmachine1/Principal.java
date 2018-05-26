@@ -432,14 +432,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void TextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyTyped
         // TODO add your handling code here:
-        int caracter = evt.getKeyChar();
+        char caracter = evt.getKeyChar();
         System.out.println(caracter);
-        if (caracter != 49){//|| caracter != KeyEvent.VK_1) {
-            //System.out.println("ENTRO");
+        if (caracter != '0' && caracter != '1') {
             evt.consume();
         }
     }//GEN-LAST:event_TextoKeyTyped
-
+    
     /**
      * @param args the command line arguments
      */
