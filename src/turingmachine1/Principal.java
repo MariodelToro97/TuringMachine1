@@ -5,8 +5,6 @@
  */
 package turingmachine1;
 
-import com.sun.glass.events.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**
@@ -376,9 +374,7 @@ public class Principal extends javax.swing.JFrame {
                 error = true;
             
             } else {
-                state = estado;
-                //System.out.println(state);
-                //System.out.println(valor);
+                state = estado; //Gaurda el estado para que no se pierda y sirva de busqueda en los respectivos métodos que se necesiten.
                 System.out.println(modificado);
                 estado = Integer.parseInt(ObtencionEstado(state, valor)); //Llamado al método que obtiene el estado al que se moverá el apuntador
                 
@@ -396,12 +392,12 @@ public class Principal extends javax.swing.JFrame {
 
                     movimiento = Integer.parseInt(this.ObtencionMovimiento(state, valor));//Llamado al método de obtención del movimiento ha realizar por el apuntador en la máquina de Turing
                     
-                    switch (movimiento){
-                        case -1:
+                    switch (movimiento){ //Checa el tipo de movimiento que da como resultado de la tabla de transición
+                        case -1://Entra aquí si el movimiento del apuntador que se debe realizar es hacia la izquierda
                             posicion--;
                             break;
                             
-                        case 1:
+                        case 1: //Entra aquí si el movimiento del apuntador que se debe realizar es hacia la derecha
                             posicion++;
                             break;
                     }
@@ -431,9 +427,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_TextoKeyReleased
 
     private void TextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyTyped
-        // TODO add your handling code here:
+        // Método para validar que solo se ingresen los digitos 1 y 0 en la caja de ingreso de datos por el usuario
         char caracter = evt.getKeyChar();
-        System.out.println(caracter);
         if (caracter != '0' && caracter != '1') {
             evt.consume();
         }
