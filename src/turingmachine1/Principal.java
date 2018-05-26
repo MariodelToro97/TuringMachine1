@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* Este programa fue hecho por Mario Josue del Toro Morales
+* con Número de Control 15460644
+* Estudiante del sexto semestre de la carrera de Ingeniería en Sistemas Computacionales
+* del Instituto Tecnológico de Colima
+* Materia de Lenguajes y Autómatas I
+******Descripción************
+* Programa que usa la máquina de Turing para sacar el complemento a 1 de una cadena
  */
 package turingmachine1;
 
