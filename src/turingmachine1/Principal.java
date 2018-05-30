@@ -205,9 +205,6 @@ public class Principal extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TextoKeyReleased(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TextoKeyTyped(evt);
-            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,11 +322,11 @@ public class Principal extends javax.swing.JFrame {
         Texto.requestFocus();
     }//GEN-LAST:event_LimpiarActionPerformed
 
-    public String EspacioCadena (){
+    public void EspacioCadena (){
         //Método que agrega el espacio respectivo para la terminación de la máquina
         String secuencia = Texto.getText();
         secuencia += " ";
-        return secuencia;
+        Texto.setText(secuencia);        
     }
     
     public int ChecarAlfabeto(String caracter){
@@ -362,39 +359,42 @@ public class Principal extends javax.swing.JFrame {
     
     private void ObtenerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObtenerActionPerformed
         // Método que se deesencadena tras pulsar el boton de Obtener de la interfaz principal
-        int estado = 0, movimiento, posicion = 0, valor, cambio, state;
-        String caracter, Text, modificado = "";
+        int estado = 0, movimiento, posicion = 0, valor, cambio, state = 0;
+        String caracter, modificado = "", mostrar = "";
         boolean error = false;
         
-        Text = EspacioCadena(); // Llamado al método que agrega el espacio para la terminación de la máquina.
+        EspacioCadena(); // Llamado al método que agrega el espacio para la terminación de la máquina.
         
         do {
-            caracter = Character.toString(Text.charAt(posicion)); //Obtiene el valor de la cadena.
-            
+            caracter = Character.toString(Texto.getText().charAt(posicion)); //Obtiene el valor de la cadena.            
             valor = ChecarAlfabeto(caracter); // Llamado al método para checar si el caracter pertenece al alfabeto.
             
             if (valor == -1) { //Entra si NO encuentra el caracter en el alfabeto
-                JOptionPane.showMessageDialog(null, "El caracter no existe en el alfabeto binario de la máquina", "ERROR", JOptionPane.ERROR_MESSAGE);
-                error = true;
+                mostrar += "\n[" + state + "] [" + caracter + "] ---->";
+                JOptionPane.showMessageDialog(null, mostrar + "\nEl caracter no existe en el alfabeto binario de la máquina", "ERROR", JOptionPane.ERROR_MESSAGE);
+                error = true;                
             
             } else {
                 state = estado; //Gaurda el estado para que no se pierda y sirva de busqueda en los respectivos métodos que se necesiten.
-                System.out.println(modificado);
                 estado = Integer.parseInt(ObtencionEstado(state, valor)); //Llamado al método que obtiene el estado al que se moverá el apuntador
                 
-                if (estado == 99) { //Entra si encuentra el estado final                    
-                    JOptionPane.showMessageDialog(null, "El proceso ha terminado de forma correcta\n\n El resultado del Complemento a 1 es:\n\n" + modificado, "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
-                    error = true;
+                if (estado == 99) { //Entra si encuentra el estado final
+                    mostrar += "\n[" + state + "] [" + caracter + "] ----> (99, , )";
+                    JOptionPane.showMessageDialog(null, mostrar +  "\nEl proceso ha terminado de forma correcta\n\n El resultado del Complemento a 1 es:\n\n" + modificado, "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
+                    error = true;                    
                 
                 } else { //Entra si aún sigue en el proceso sin ningún error encontrado.
-                    cambio = Integer.parseInt(this.ObtencionConversion(state, valor)); //Llamado del método de obtención de caracter por el que se va a cambiar el valor en la cadena.
+                    cambio = Integer.parseInt(this.ObtencionConversion(state, valor)); //Llamado del método de obtención de caracter por el que se va a cambiar el valor en la cadena.                    
                     if (cambio != 3) {
-                        modificado += cambio; //Agregado a la cadena donde se van almacenando los datos que salen de la máquina de Turing
+                        //Text = Texto.getText()
+                        modificado += cambio; //Agregado a la cadena donde se van almacenando los datos que salen de la máquina de Turing                        
                     } else {
                         modificado += " "; //Agregado a la cadena final del espacio terminador
                     }
 
                     movimiento = Integer.parseInt(this.ObtencionMovimiento(state, valor));//Llamado al método de obtención del movimiento ha realizar por el apuntador en la máquina de Turing
+                    
+                    mostrar += "\n[" + state + "] [" + caracter + "] ----> (" + estado + ", " + cambio + ", " + movimiento + ")";
                     
                     switch (movimiento){ //Checa el tipo de movimiento que da como resultado de la tabla de transición
                         case -1://Entra aquí si el movimiento del apuntador que se debe realizar es hacia la izquierda
@@ -429,14 +429,6 @@ public class Principal extends javax.swing.JFrame {
             Obtener.setEnabled(false); //deshabilitación del botón de obtener
         }
     }//GEN-LAST:event_TextoKeyReleased
-
-    private void TextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyTyped
-        // Método para validar que solo se ingresen los digitos 1 y 0 en la caja de ingreso de datos por el usuario
-        char caracter = evt.getKeyChar();
-        if (caracter != '0' && caracter != '1') {
-            evt.consume();
-        }
-    }//GEN-LAST:event_TextoKeyTyped
     
     /**
      * @param args the command line arguments
