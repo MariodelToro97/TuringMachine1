@@ -324,9 +324,9 @@ public class Principal extends javax.swing.JFrame {
 
     public void EspacioCadena (){
         //Método que agrega el espacio respectivo para la terminación de la máquina
-        String secuencia = Texto.getText();
-        secuencia += " ";
-        Texto.setText(secuencia);        
+        if (!Texto.getText().endsWith(" ")) {
+            Texto.setText(Texto.getText() + " ");
+        }
     }
     
     public int ChecarAlfabeto(String caracter){
